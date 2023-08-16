@@ -1,16 +1,17 @@
 grammar IsiLang;
 
 @header{
-	import br.com.professorisidro.isilanguage.datastructures.IsiSymbol;
-	import br.com.professorisidro.isilanguage.datastructures.IsiVariable;
-	import br.com.professorisidro.isilanguage.datastructures.IsiSymbolTable;
-	import br.com.professorisidro.isilanguage.exceptions.IsiSemanticException;
-	import br.com.professorisidro.isilanguage.ast.IsiProgram;
-	import br.com.professorisidro.isilanguage.ast.AbstractCommand;
-	import br.com.professorisidro.isilanguage.ast.CommandLeitura;
-	import br.com.professorisidro.isilanguage.ast.CommandEscrita;
-	import br.com.professorisidro.isilanguage.ast.CommandAtribuicao;
-	import br.com.professorisidro.isilanguage.ast.CommandDecisao;
+	import br.com.ufabc.compiladores.isilanguage.datastructures.IsiSymbol;
+	import br.com.ufabc.compiladores.isilanguage.datastructures.IsiVariable;
+	import br.com.ufabc.compiladores.isilanguage.datastructures.IsiSymbolTable;
+	import br.com.ufabc.compiladores.isilanguage.exceptions.IsiSemanticException;
+	import br.com.ufabc.compiladores.isilanguage.ast.IsiProgram;
+	import br.com.ufabc.compiladores.isilanguage.ast.AbstractCommand;
+	import br.com.ufabc.compiladores.isilanguage.ast.CommandLeitura;
+	import br.com.ufabc.compiladores.isilanguage.ast.CommandEscrita;
+	import br.com.ufabc.compiladores.isilanguage.ast.CommandAtribuicao;
+	import br.com.ufabc.compiladores.isilanguage.ast.CommandDecisao;
+	import br.com.ufabc.compiladores.isilanguage.ast.CommandRepeticao;
 	import java.util.ArrayList;
 	import java.util.Stack;
 }
@@ -101,7 +102,8 @@ bloco	: { curThread = new ArrayList<AbstractCommand>();
 cmd		:  cmdleitura  
  		|  cmdescrita 
  		|  cmdattrib
- 		|  cmdselecao  
+ 		|  cmdselecao
+		|  cmdrepeticao
 		;
 		
 cmdleitura	: 'leia' AP
@@ -174,6 +176,25 @@ cmdselecao  :  'se' AP
                    	}
                    )?
             ;
+
+cmdrepeticao : 'enquanto' AP
+						 ID    { _exprDecision = _input.LT(-1).getText(); }
+						 OPREL { _exprDecision += _input.LT(-1).getText(); }
+						 (ID | NUMBER) {_exprDecision += _input.LT(-1).getText(); }
+						 FP
+						 ACH 
+						 { 
+							curThread = new ArrayList<AbstractCommand>();
+							stack.push(curThread);
+						 }
+						 (cmd)+ 
+						 FCH
+						 {
+							CommandRepeticao cmd = new CommandRepeticao(_exprDecision, stack.pop());
+							stack.peek().add(cmd);
+						 }
+			;
+						 
 			
 expr		:  termo ( 
 	             OP  { _exprContent += _input.LT(-1).getText();}
@@ -185,7 +206,7 @@ termo		: ID { verificaID(_input.LT(-1).getText());
 	               _exprContent += _input.LT(-1).getText();
                  } 
             | 
-              NUMBER
+              (NUMBER | TEXTO)
               {
               	_exprContent += _input.LT(-1).getText();
               }
@@ -222,7 +243,10 @@ OPREL : '>' | '<' | '>=' | '<=' | '==' | '!='
       
 ID	: [a-z] ([a-z] | [A-Z] | [0-9])*
 	;
-	
+
+TEXTO : ["]([a-z] | [A-Z] | [0-9])*["]
+ 	 ;
+
 NUMBER	: [0-9]+ ('.' [0-9]+)?
 		;
 		

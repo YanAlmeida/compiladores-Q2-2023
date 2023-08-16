@@ -1,11 +1,13 @@
 programa
 
   numero a, b;
-  texto  t1;
+  texto t1;
+  texto t2;
 
   leia(a);
   leia(b);
-  
+
+  t2 = "12";
   a = 1 + 2 * 3 / b;
   
 
@@ -14,6 +16,10 @@ programa
   }
   senao {
      escreva (b);
+  }
+
+  enquanto (a > b) {
+   escreva(t2);
   }
   
   
