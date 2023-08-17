@@ -85,7 +85,7 @@ grammar IsiLang;
 	}
 
 	public void efetuaDeclaracaoVariavel(String id) {
-		_varName = _input.LT(-1).getText();
+		_varName = id;
 		_varValue = null;
 		symbol = new IsiVariable(_varName, _tipo, _varValue);
 		if (!symbolTable.exists(_varName)){
@@ -174,14 +174,13 @@ cmdescrita	: 'escreva'
                {
                	  CommandEscrita cmd = new CommandEscrita(_exprContent);
                	  stack.peek().add(cmd);
-				  _exprContent = "";
                }
 			;
 			
 cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                     _exprID = _input.LT(-1).getText();
                    } 
-               ATTR { _exprContent = ""; } 
+               ATTR
                expr 
                SC
                {
@@ -189,7 +188,6 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
                	 CommandAtribuicao cmd = new CommandAtribuicao(_exprID, _exprContent);
                	 stack.peek().add(cmd);
 				 symbolTable.setAttr(_exprID);
-				 _exprContent = "";
                }
 			;
 			
@@ -249,12 +247,23 @@ cmdrepeticao : 'enquanto' 	AP
 			;
 						 
 			
-expr		:  termo {_lastTermo = _input.LT(-1).getText();}( 
+exprbase		:  termo {_lastTermo = _input.LT(-1).getText();}( 
 	             OP  { _exprContent += _input.LT(-1).getText(); }
 	            termo { verificaTermosMesmoTipo(_lastTermo, _input.LT(-1).getText());
 				        _lastTermo = _input.LT(-1).getText(); }
 	            )*
 				{_lastTermo = "";}
+			;
+
+exprpos     :	exprbase | AP { _exprContent += _input.LT(-1).getText(); }
+						   exprbase
+						   FP { _exprContent += _input.LT(-1).getText(); }
+			;
+
+expr        : { _exprContent = ""; } exprpos(
+									OP {_exprContent += _input.LT(-1).getText();}
+									exprpos
+									)*
 			;
 			
 termo		: ID { 	verificaID(_input.LT(-1).getText());

@@ -161,7 +161,7 @@ public class IsiLangLexer extends Lexer {
 		}
 
 		public void efetuaDeclaracaoVariavel(String id) {
-			_varName = _input.LT(-1).getText();
+			_varName = id;
 			_varValue = null;
 			symbol = new IsiVariable(_varName, _tipo, _varValue);
 			if (!symbolTable.exists(_varName)){

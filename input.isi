@@ -9,7 +9,7 @@ programa
 
   t2 = "ok";
 
-  a = 1 + 2 * 3 / b;
+  a = 5 + (1 + 2) * (3 / b);
   se ( a > b ) {
      escreva (a + b);
   }
