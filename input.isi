@@ -1,24 +1,23 @@
 programa
 
-  numero a, b;
+  numero a, b, c;
   texto t1;
   texto t2;
 
   leia(a);
   leia(b);
 
-  t2 = "12";
-  a = 1 + 2 * 3 / b;
-  
+  t2 = "ok";
 
+  a = 1 + 2 * 3 / b;
   se ( a > b ) {
-     escreva (a);
+     escreva (a + b);
   }
   senao {
-     escreva (b);
+     escreva (b - a);
   }
 
-  enquanto (a > b) {
+  enquanto (b > a) {
    escreva(t2);
   }
   

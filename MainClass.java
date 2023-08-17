@@ -4,16 +4,17 @@ public class MainClass{
        Scanner _key = new Scanner(System.in);
 double  a;
 double  b;
+double  c;
 String  t1;
 String  t2;
 a= _key.nextDouble();
 b= _key.nextDouble();
-t2 = "12";
+t2 = "ok";
 a = 1+2*3/b;
 if (a>b) {
-System.out.println(a);}else {
-System.out.println(b);}
+System.out.println(a+b);}else {
+System.out.println(b-a);}
 
-while (a>b) {
+while (b>a) {
 System.out.println(t2);}
   }}

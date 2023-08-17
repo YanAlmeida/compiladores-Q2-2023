@@ -33,16 +33,16 @@ public class MainClass {
 			System.out.println("Compilation Successful");
 			
 			parser.exibeComandos();
-			
+			parser.exibeWarnings();
 			parser.generateCode();
 			
 		}
 		catch(IsiSemanticException ex) {
-			System.err.println("Semantic error - "+ex.getMessage());
+			System.err.println("[SEMANTIC ERROR] "+ex.getMessage());
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
-			System.err.println("ERROR "+ex.getMessage());
+			System.err.println("[UNKNOWN ERROR] "+ex.getMessage());
 		}
 		
 	}
