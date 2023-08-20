@@ -30,8 +30,6 @@ public class MainClass {
 			
 			parser.prog();
 			
-			System.out.println("Compilation Successful");
-			
 			parser.exibeComandos();
 			parser.exibeWarnings();
 			parser.generateCode();

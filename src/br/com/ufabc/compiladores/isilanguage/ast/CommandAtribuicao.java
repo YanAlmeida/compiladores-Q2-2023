@@ -1,7 +1,5 @@
 package br.com.ufabc.compiladores.isilanguage.ast;
 
-import br.com.ufabc.compiladores.isilanguage.datastructures.IsiVariable;
-
 public class CommandAtribuicao extends AbstractCommand{
 
 	private String id;
