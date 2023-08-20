@@ -796,7 +796,7 @@ public class IsiLangParser extends Parser {
 			default:
 				throw new NoViableAltException(this);
 			}
-				_exprDecision += _input.LT(-1).getText(); 
+				_exprDecision = _input.LT(-1).getText(); 
 								_lastTermo = ""; 
 			setState(103);
 			match(OPREL);

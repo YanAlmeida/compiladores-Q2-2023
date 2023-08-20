@@ -11,7 +11,7 @@ a= _key.nextDouble();
 b= _key.nextDouble();
 t2 = "ok";
 a = 5+(1+2)*(3/b);
-if (null) {
+if (21>20) {
 System.out.println(a+b);}else {
 System.out.println(b-a);}
 
