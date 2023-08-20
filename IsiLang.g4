@@ -192,9 +192,9 @@ cmdattrib	:  ID { verificaID(_input.LT(-1).getText());
 			;
 			
 
-comparacao :    ID    { efetuaVerificacoesIDComparacao(_input.LT(-1).getText()); 
-						_exprDecision = _input.LT(-1).getText(); 
-						_lastTermo = _input.LT(-1).getText(); }
+comparacao :    (ID { efetuaVerificacoesIDComparacao(_input.LT(-1).getText()); } | NUMBER)
+				{	_exprDecision += _input.LT(-1).getText(); 
+					_lastTermo = ""; }
             	OPREL { _exprDecision += _input.LT(-1).getText(); }
                 (ID { efetuaVerificacoesIDComparacao(_input.LT(-1).getText()); } | NUMBER)
 				{	_exprDecision += _input.LT(-1).getText(); 

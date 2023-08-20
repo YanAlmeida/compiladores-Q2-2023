@@ -10,7 +10,7 @@ programa
   t2 = "ok";
 
   a = 5 + (1 + 2) * (3 / b);
-  se ( a > b ) {
+  se ( 21 > 20 ) {
      escreva (a + b);
   }
   senao {
